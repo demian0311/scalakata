@@ -92,9 +92,62 @@ class TheBasics {
      */
     @Test def one_6 {
         assertEquals('o', "Hello"(4))
+
         assertEquals(BigInt("1234567890"), BigInt.apply("1234567890"))
         // BigInt has a companion object (a static) with an apply method
         // this is the idiomatic way to instantiate new classes in scala
+
+        // case classes get you an apply method
+        val p = Person("Dude")
+        println("person: " + p.name)
+    }
+
+    /**
+     * scaladoc
+     *
+     * TODO: get familiar with the Rich* scaladoc entries
+     * - http://www.scala-lang.org/api/current/index.html#scala.runtime.RichBoolean
+     *
+     * TODO: get familiar with everything in the scala package:
+     * - http://www.scala-lang.org/api/current/index.html#scala.package
+     *
+     * TODO: look at the math functions in scala.math._
+     *
+     * TODO: use the count features:
+     * def count(p: (Char) => Boolean) : Int
+     */
+    @Test def one_7 {
+        assertEquals(2, "Hello World!".count(_.isUpper))
+        assertEquals("Hungry", "Harry".patch(1, "ung", 2))
+    }
+
+    @Test def one_8 {
+
+        // 1) In the Scala REPL, type 3. followed by the Tab key. What methods can be applied?
+        //    done
+        // 2) In the Scala REPL, compute the square root of 3, and then square that value. By how much does the result differ from 3? (Hint: The res variables are your friend.)
+        assertEquals(3, math.sqrt(9).toInt)
+
+        // TODO: 4) Scala lets you multiply a string with a number—try out "crazy" * 3 in the REPL. What does this operation do? Where can you find it in Scaladoc?
+        assertEquals("crazy crazy crazy ", "crazy " * 3)
+
+        // TODO: 5) What does 10 max 2 mean? In which class is the max method defined?
+        assertEquals(10, 10 max 2)
+
+        // TODO: 6) Using BigInt, compute 2^1024.
+
+        // 7) What do you need to import so that you can get a random prime as probablePrime(100, Random), without any qualifiers before probablePrime and Random?
+
+        BigInt.probablePrime(100, util.Random)
+
+        import scala.math.BigInt.probablePrime
+        import util._
+        probablePrime(100, Random)
+
+        // TODO: 8) One way to create random file or directory names is to produce a random BigInt and convert it to base 36, yielding a string such as "qsnvbevtomcj38o06kul". Poke around Scaladoc to find a way of doing this in Scala.
+
+        // TODO: 9) How do you get the first character of a string in Scala? The last character?
+        // TODO: 10) What do the take, drop, takeRight, and dropRight string functions do? What advantage or disadvantage do they have over using substring?
     }
 
     def java_like_statements() {
@@ -117,5 +170,6 @@ class TheBasics {
             println("while: " + counter)
         }
     }
-
 }
+
+case class Person(name: String)
