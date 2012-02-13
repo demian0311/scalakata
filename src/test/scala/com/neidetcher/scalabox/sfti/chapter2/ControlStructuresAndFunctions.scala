@@ -88,6 +88,145 @@ class ControlStructuresAndFunctions {
 	/** Advanced for Loops and for Comprehensions */
 	@Test def two_6 {
 
+		// for loops can have multiple generators
+		for (i <- 1 to 3; j <- 1 to 5) {
+			print(i + ":" + j + " ")
+		}
+		println("")
+
+		// generators can have guards
+		for (i <- 1 to 3; j <- 1 to 3 if i != j) print((10 * i + j) + " ")
+		println("")
+
+		// you can have definitions with variables derived from generators
+		for (i <- 1 to 3; from = 4 - i; j <- from to 3) print((10 * i + j) + " ")
+		println("")
+
+		// yield makes the loop create a colleciton
+		// this is a for comprehension, where the for creates a result
+		assertEquals(Vector(1, 2, 0, 1, 2, 0, 1, 2, 0, 1), (for (i <- 1 to 10) yield i % 3))
+
+		assertEquals("HIeflmlmop", for (c <- "Hello"; i <- 0 to 1) yield (c + i).toChar)
+
+		assertEquals(Vector('H', 'e', 'l', 'l', 'o', 'I', 'f', 'm', 'm', 'p'), for (i <- 0 to 1; c <- "Hello") yield (c + i).toChar)
+	}
+
+	/** Functions */
+	@Test def two_7 {
+		// methods operate on objects
+		// functions don't don't need objects
+
+		def abs(x: Int) = if (x > 0) x else -x
+		assertEquals(1, abs(-1))
+
+		// functions can be placed in blocks
+		def countUpperCaseLetters(stringIn: String) = {
+			stringIn.count(_.isUpper)
+		}
+		assertEquals(2, countUpperCaseLetters("Hello World"))
+
+		// for recursive functions you have to specify the return type
+		def fac(n: Int): Int = if (n <= 0) 1 else n * fac(n - 1)
+		assertEquals(120, fac(5))
+	}
+
+	/** Default and Named Arguments L1 */
+	@Test def two_8 {
+		def decorate(str: String, left: String = "[", right: String = "]") = left + str + right
+		assertEquals("[foo]", decorate("foo"))
+		assertEquals("{foo]", decorate("foo", "{"))
+
+		// you can also supply parameter names
+		// hmmm, IDE doesn't help with that, surprising
+		assertEquals("<foo>", decorate(right = ">", left = "<", str = "foo"))
+	}
+
+	/** Variable Arguments L1*/
+	@Test def two_9 {
+		// this is actually a Seq data type
+		def sum(args: Int*) = {
+			var result = 0
+			for (arg <- args) result += arg
+			result
+		}
+
+		assertEquals(5, sum(1, 3, 1))
+
+		// consider the range to be an argument sequence
+		assertEquals(15, sum(1 to 5: _*))
+	}
+
+	/** Procedures */
+	@Test def two_10 {
+		// a procedure returns no value, you only call it the side effect
+		// side effects are a bad thing but sometimes necessary, like when
+		// you want to print to the console
+
+		// Effectively if you leave out the equals sign it is like having
+		// the return type of Unit
+		def box(s: String) {
+			val border = "_" * s.length() + "__\n"
+			println(border + "|" + s + "|\n" + border)
+		}
+
+		box("Demian was here")
+	}
+
+	/** Lazy Values L1 */
+	@Test def two_11 {
+		var aEvaluation, bEvaluation, cEvaluation = 0
+
+		val a = aEvaluation += 1 // evaluated at this line
+		lazy val b = bEvaluation += 1 // not evaluated on this line
+		def c = cEvaluation += 1 // defines a function that is evaluated every time it
+		// is called
+
+		assertEquals(1, aEvaluation) // a regular var, evaluated when we declare it
+		assertEquals(0, bEvaluation) // it's lazy, so hasn't been evaluated yet
+		assertEquals(0, cEvaluation) // the def was just declared
+
+		println("a: " + a)
+		println("b: " + b)
+		println("c: " + c)
+		assertEquals(1, aEvaluation)
+		assertEquals(1, bEvaluation)
+		assertEquals(1, cEvaluation)
+
+		println("a: " + a)
+		println("b: " + b)
+		println("c: " + c)
+		assertEquals(1, aEvaluation)
+		assertEquals(1, bEvaluation)
+		assertEquals(2, cEvaluation) // evaluated every time we reference it
+	}
+
+	/** Exceptions */
+	@Test def two_12 {
+		import scala.math._
+		val x = 25
+
+		// even though the else block throws an exception, Scala sees it as a 'Nothing'.
+		// this is a special situation where we don't make the result the super type of
+		// the if statement, we just disregard that block (that returns 'Nothing') when
+		// figuring out the result type of the if statement.
+		val result = if (x >= 0) { sqrt(x) } else throw new IllegalArgumentException("x should not be negative")
+		assertEquals("double", result.getClass().getName())
+
+		import java.io.IOException
+		import java.net.MalformedURLException
+		import java.net.URL
+
+		val urlString = "http://horstmann.com/fred-tiny.gif"
+		try {
+			val url = new URL(urlString)
+		}
+		catch {
+			case _: MalformedURLException => println("Bad URL: " + urlString)
+			case ex: IOException => ex.printStackTrace()
+		}
+		finally {
+			println("all done")
+		}
 	}
 
 }
