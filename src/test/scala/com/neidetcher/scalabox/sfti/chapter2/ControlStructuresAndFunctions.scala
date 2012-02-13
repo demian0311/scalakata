@@ -229,4 +229,48 @@ class ControlStructuresAndFunctions {
 		}
 	}
 
+	@Test def exercises_1 {
+		def signum(value: Int): Int = {
+			if (value == 0) {
+				0
+			}
+			else if (value < 0) {
+				-1
+			}
+			else {
+				1
+			}
+		}
+
+		assertEquals(-1, signum(-256))
+		assertEquals(0, signum(0))
+		assertEquals(1, signum(1024))
+	}
+
+	@Test def exercises_2 {
+		val emptyBlock = {}
+		println("emptyBlock: " + emptyBlock)
+		assertEquals("void", emptyBlock.getClass().getName()) // not sure this is the right answer
+	}
+
+	@Test def exercises_3 {
+		var y = 0
+		var x: Any = ()
+		x = y = 1
+	}
+
+	@Test def exercises_4 {
+		// Java:
+		// for (int i = 10; i >= 0; i--) System.out.println(i);
+
+		// I don't think this is what they were thinking of
+		for (i <- 0 to 10) { println(10 - i) }
+	}
+
+	@Test def exercises_5 {
+		//		def countDown(n: Int){
+		//			
+		//		}
+	}
+
 }
