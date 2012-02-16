@@ -260,17 +260,48 @@ class ControlStructuresAndFunctions {
 	}
 
 	@Test def exercises_4 {
-		// Java:
-		// for (int i = 10; i >= 0; i--) System.out.println(i);
+		// Java:  for (int i = 10; i >= 0; i--) System.out.println(i);
 
-		// I don't think this is what they were thinking of
-		for (i <- 0 to 10) { println(10 - i) }
+		for (i <- 0 to 10) { println(10 - i) } // my first approach
+		for (i <- (0 to 10).reverse) { println(i) }
+		for (i <- (10 to 0 by -1)) { println(i) } // this is probably the best solution
+		for (i <- (10.to(0).by(-1))) { println(i) }
 	}
 
 	@Test def exercises_5 {
-		//		def countDown(n: Int){
-		//			
-		//		}
+		println("### exercise_5 ###")
+		def countdown(n: Int) = for (i <- n to 0 by -1) println(i)
+		countdown(33)
+	}
+
+	@Test def exercise_6 {
+		def productOfCharacterUnicode(s: String): Int = {
+			var currentProduct = 1
+			for (i <- 0 to s.length() - 1) {
+				currentProduct *= s.charAt(i).toInt
+			}
+			currentProduct
+		}
+
+		assertEquals(825152896, productOfCharacterUnicode("Hello"))
+	}
+
+	@Test def exercise_7 {
+		// TODO
+		//		def productOfCharacterUnicode(s: String): Int = {
+		//		assertEquals(825152896, productOfCharacterUnicode("Hello"))
+	}
+
+	@Test def exercise_8 {
+		// TODO
+	}
+
+	@Test def exercise_9 {
+		// TODO
+	}
+
+	@Test def exercise_10 {
+		// TODO
 	}
 
 }
