@@ -84,12 +84,29 @@ class Chapter3Test {
 		true
 	}
 
+	/*
+	class ArrayHelper[TYPE](a: Array[TYPE]) {
+		override def toString(): String = {
+			"array" // a.<stuff>
+		}
+	}
+
+	implicit def toString[A](arr: Array[A]) = new ArrayHelper[A](arr)
+	 */
+
 	/** Transforming Arrays */
 	@Test def three_4 {
 
 		val a = Array(2, 3, 5, 7, 11)
 		val result = for (elem <- a) yield 2 * elem
 		assertTrue("arrays should have same value", compareArrays(Array(4, 6, 10, 14, 22), result))
+
+		// this is from the book, it doesn't work
+		//for (elem <- a if (a % 2 == 0)) yield 2 * elem
+
+		val resultB = a.filter(_ % 2 == 0).map(2 * _)
+		println("resultB: " + resultB.toString())
+		//assertTrue("arrays should have the same value", compareArrays(Array(4, 3, 5, 7, 11), resultB))
 
 	}
 }
