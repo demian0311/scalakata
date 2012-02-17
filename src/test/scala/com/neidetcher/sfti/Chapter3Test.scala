@@ -106,7 +106,65 @@ class Chapter3Test {
 
 		val resultB = a.filter(_ % 2 == 0).map(2 * _)
 		println("resultB: " + resultB.toString())
-		//assertTrue("arrays should have the same value", compareArrays(Array(4, 3, 5, 7, 11), resultB))
+		println("resultB___")
+		resultB.foreach(println _)
+		assertTrue("arrays should have the same value", compareArrays(Array(4), resultB))
+	}
 
+	/** Common Algorithms */
+	@Test def three_5 {
+		val a = Array(1, 7, 2, 9)
+		val b = Array(-60, 55, 0, 40)
+
+		assertEquals(19, a.sum)
+		assertEquals(55, b.max)
+
+		//val bSorted = b.sorted(_ < _) // TODO: this does not work for me
+
+		// you can sort an array in place
+		util.Sorting.quickSort(b)
+		assertTrue(compareArrays(Array(-60, 0, 40, 55), b))
+
+		assertEquals("-60 and 0 and 40 and 55", b.mkString(" and "))
+		assertEquals("<-60 and 0 and 40 and 55>", b.mkString("<", " and ", ">"))
+	}
+
+	/** Deciphering Scaladoc */
+	@Test def three_6 {
+		// methods for Array class are listed under ArrayOps, the Java Array is
+		// converted to an ArrayOps before any operations are applied
+
+		val a = Array(34, 62, 2, 8, 143)
+		assertEquals(4, a.count(_ % 2 == 0))
+
+		// append
+		// appendAll
+		// += 
+		// copyToArray
+	}
+
+	/** Multidimensional Arrays */
+	@Test def three_7 {
+		val matrix = Array.ofDim[Double](3, 4) // 3 rows, 4 cols
+		matrix(2)(3) = 42
+	}
+
+	/** Interoperating with Java */
+	@Test def three_8 {
+		import collection.JavaConversions.bufferAsJavaList
+		import collection.mutable.ArrayBuffer
+
+		val command = ArrayBuffer("ls", "-al", "/home/cay") // a scala data structure
+		val pb = new ProcessBuilder(command) // going from scala to java
+
+		import collection.JavaConversions.asScalaBuffer
+		import collection.mutable.Buffer
+		val cmd: Buffer[String] = pb.command() // Java to Scala
+
+		assertEquals(command, cmd)
+	}
+
+	@Test def exercises_1 {
+		//a = Array
 	}
 }
