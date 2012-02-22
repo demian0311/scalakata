@@ -8,15 +8,17 @@ class Chapter3Test {
 	@Test def three_1 {
 		// a 10 element array of type int
 		val nums = new Array[Int](10)
-		println("nums: " + nums)
+
+		nums.foreach(println(_))
 
 		// a 10 element array of type string
 		val a = new Array[String](10)
-		println("a: " + a)
+		a.foreach(println(_))
 
 		// compiler knows that you want a 2 element array of type string
 		val s = Array("Hello", "World")
 		println("s: " + s)
+		s.foreach(println(_))
 
 		assertEquals("World Hello", (s(1) + " " + s(0)))
 	}
@@ -73,11 +75,17 @@ class Chapter3Test {
 	}
 
 	def compareArrays[A](a: Array[A], b: Array[A]): Boolean = {
+
+		println("comparing arrays")
+		println("a: " + a.foreach(print(_)))
+		println("b: " + b.foreach(print(_)))
+
 		if (a == null && b == null) true
 		if (a == null || b == null) false
 		if (a.length != b.length) false
 
 		for (i <- 0 until a.length) {
+			println("comparing(" + a(i) + "=" + b(i) + ")")
 			if (a(i) != b(i)) return false
 		}
 
@@ -165,6 +173,74 @@ class Chapter3Test {
 	}
 
 	@Test def exercises_1 {
-		//a = Array
+
+		import scala.util.Random
+		import scala.collection.mutable.ArrayBuffer
+
+		def createRandomIntegers(n: Int): Array[Int] = {
+			val arrayBuffer = ArrayBuffer[Int]()
+
+			for (currIndex <- 0 to n) {
+				arrayBuffer += Random.nextInt(n)
+			}
+
+			arrayBuffer.toArray
+		}
+
+		val result = createRandomIntegers(20)
+		result.foreach(println(_))
+	}
+
+	/**
+	 * TODO: probably should be more elegant
+	 * Write a loop that swaps adjacent elements of an array of integers. For example,
+	 * Array(1, 2, 3, 4, 5) becomes Array(2, 1, 4, 3, 5).
+	 */
+	@Test def exercises_2 {
+
+		def swapAdjacent(arrayIn: Array[Int]): Array[Int] = {
+			val arrayOut = new Array[Int](arrayIn.length)
+			for (index <- 0 until arrayIn.length) {
+
+				val currElement = arrayIn(index)
+				println(currElement)
+
+				if (currElement % 2 == 0) {
+					arrayOut(index - 1) = currElement
+				}
+				else {
+					if (index != arrayIn.length - 1) {
+						arrayOut(index + 1) = currElement
+					}
+					else {
+						arrayOut(index) = currElement
+					}
+				}
+			}
+
+			arrayOut
+		}
+
+		assertTrue(compareArrays(Array(2, 1, 4, 3, 5), swapAdjacent(Array(1, 2, 3, 4, 5))))
+	}
+
+	/**
+	 * TODO: I don't get how I could do it.
+	 * do the same as exercise 2 but use for / yield
+	 */
+	@Test def exercise_3 {
+		def swapAdjacent(arrayIn: Array[Int]): Array[Int] = {
+			for (elem <- arrayIn if elem % 2 == 0) yield elem
+		}
+		//assertTrue(compareArrays(Array(2, 1, 4, 3, 5), swapAdjacent(Array(1, 2, 3, 4, 5))))
+	}
+
+	/**
+	 * TODO:
+	 * Given an array of integers, produce a new array that contains all positive values
+	 * of the original array, in their original order, followed by all values that are
+	 * zero or negative, in their original order.
+	 */
+	@Test def exercise_4 {
 	}
 }
