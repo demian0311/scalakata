@@ -13,11 +13,7 @@ class FizzBuzz {
 	}
 
 	def processLine(valIn: Int): String = {
-		var resultString = ""
-		if (valIn % 3 == 0) resultString = "Fizz"
-		if (valIn % 5 == 0) resultString += "Buzz"
-
-		resultString
+		(if (valIn % 3 == 0) "Fizz" else "") + (if (valIn % 5 == 0) "Buzz" else "")
 	}
 
 	@Test
