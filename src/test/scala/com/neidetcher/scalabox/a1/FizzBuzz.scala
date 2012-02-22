@@ -6,15 +6,8 @@ import org.junit.Ignore
 
 class FizzBuzz {
 
-	def fizzBuzz() {
-		for (i <- 1 to 100) {
-			println(i + ": " + processLine(i))
-		}
-	}
-
-	def processLine(valIn: Int): String = {
-		(if (valIn % 3 == 0) "Fizz" else "") + (if (valIn % 5 == 0) "Buzz" else "")
-	}
+	def fizzBuzz() = for (i <- 1 to 100) println(i + ": " + processLine(i))
+	def processLine(valIn: Int): String = (if (valIn % 3 == 0) "Fizz" else "") + (if (valIn % 5 == 0) "Buzz" else "")
 
 	@Test
 	@Ignore
@@ -28,5 +21,4 @@ class FizzBuzz {
 		assertEquals("Fizz", processLine(3))
 		assertEquals("Buzz", processLine(10))
 	}
-
 }
