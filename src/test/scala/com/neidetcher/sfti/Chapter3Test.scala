@@ -227,10 +227,14 @@ class Chapter3Test {
 	/**
 	 * TODO: I don't get how I could do it.
 	 * do the same as exercise 2 but use for / yield
+	 *
+	 * Here is an example of
+	 * http://gleichmann.wordpress.com/2010/11/21/functional-scala-comprehending-comprehensions/
 	 */
 	@Test def exercise_3 {
 		def swapAdjacent(arrayIn: Array[Int]): Array[Int] = {
-			for (elem <- arrayIn if elem % 2 == 0) yield elem
+			val result = for (elem <- arrayIn if elem % 2 == 0) yield elem
+			result
 		}
 		//assertTrue(compareArrays(Array(2, 1, 4, 3, 5), swapAdjacent(Array(1, 2, 3, 4, 5))))
 	}
