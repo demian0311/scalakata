@@ -131,7 +131,7 @@ class Chapter1Test {
 		// 2) In the Scala REPL, compute the square root of 3, and then square that value. By how much does the result differ from 3? (Hint: The res variables are your friend.)
 		assertEquals(3, math.sqrt(9).toInt)
 
-		// 4) Scala lets you multiply a string with a number—try out "crazy" * 3 in the REPL. What does this operation do? Where can you find it in Scaladoc?
+		// 4) Scala lets you multiply a string with a number√ëtry out "crazy" * 3 in the REPL. What does this operation do? Where can you find it in Scaladoc?
 		// http://www.scala-lang.org/api/current/index.html#scala.collection.immutable.StringOps
 		assertEquals("crazy crazy crazy ", "crazy " * 3)
 

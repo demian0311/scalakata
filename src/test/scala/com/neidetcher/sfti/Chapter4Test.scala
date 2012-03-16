@@ -5,7 +5,7 @@ import org.junit.Assert._
 
 class Chapter4Test {
 	/** Fixed-Length Arrays */
-	@Test def four_1 {
+	@Test def one {
 		// this creates an immutable map
 		val scores = Map("Alice" -> 10, "Bob" -> 3, "Cindy" -> 8)
 		println("scores: " + scores)
@@ -31,6 +31,7 @@ class Chapter4Test {
 		assertEquals(None, result2)
 	}
 
+	/** Updating Map Values */
 	@Test def three {
 		val scores = collection.mutable.Map("Bob" -> 5)
 
@@ -41,6 +42,16 @@ class Chapter4Test {
 
 		scores -= "Fred"
 		println("scores: " + scores)
+
+		// we removed Fred
+		assertEquals(Map("Bob" -> 10, "Ted" -> 5, "Jim" -> 6), scores)
+	}
+
+	/** Iterating over Maps*/
+	@Test def four {
+		val map = Map("Bob" -> 10, "Ted" -> 5, "Jim" -> 6)
+
+		for ((k, v) <- map) { println(k + "->" + v) }
 
 	}
 
